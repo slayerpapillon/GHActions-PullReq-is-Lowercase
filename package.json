@@ -1,0 +1,25 @@
+{
+    "name": "islowercase",
+    "version": "1.0.0",
+    "description": "Verify if files are lowercase.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/slayerpapillon/PR-isLowercase"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/slayerpapillon/PR-isLowercase/issues"
+    },
+    "homepage": "https://github.com/slayerpapillon/PR-isLowercase#readme",
+    "dependencies": {
+        "@actions/core": "^1.10.0",
+        "@actions/github": "^5.1.1",
+        "glob": "^10.2.1"
+    }
+}
