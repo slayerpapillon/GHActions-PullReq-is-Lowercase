@@ -26,34 +26,36 @@ const main = async () => {
 		files.forEach(file => {
 			const isit = isLowerCase(file);
 			if (!isit) {
-				// console.log(file + " is Not Lowercase!");
 				filesNotInLowerCase.push(file);
 			}
 			});
 
 		
 		const octokit = new github.getOctokit(token);
-		
+
+		let bodyStatus = String("# Pull Request is Lowercase Status.\n\n");
 		if (filesNotInLowerCase.length != 0) {
-			const statusInfo = "Some files are not in lowercase\n" + filesNotInLowerCase.join("\n");
+			const separator = "\n📄 ";
+			const fileOrFiles = filesNotInLowerCase.length == 1 ? ' file is ' : ' files are ';
+			bodyStatus += "❌ " + filesNotInLowerCase.length + fileOrFiles + " not in lowercase." + separator + filesNotInLowerCase.join(separator);
 			const { data: createdReview } = await octokit.rest.pulls.createReview({
 				owner,
 				repo,
 				pull_number: pr_number,
 				event: 'REQUEST_CHANGES',
-				body : statusInfo
+				body : bodyStatus
 				});
 			
-			core.setFailed(statusInfo);
+			core.notice(statusInfo);
 		}
 		else {
-			const statusInfo = "All files lowercase.";
+			bodyStatus += "✅ All files lowercase.";
 			const { data: createdReview } = await octokit.rest.pulls.createReview({
         	owner,
 			repo,
 			pull_number: pr_number,
 			event: 'APPROVE',
-			body : statusInfo
+			body : bodyStatus
 			});
 
 			core.notice(statusInfo);
